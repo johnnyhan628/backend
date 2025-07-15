@@ -1,0 +1,10 @@
+spring:
+
+#db setting  
+  datasource:
+    url: ${LOCAL_DB_URL}
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
+
+server:
+  port: 6280
