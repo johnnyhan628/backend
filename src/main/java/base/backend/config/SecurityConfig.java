@@ -19,13 +19,14 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-    http
+    return http
       .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/**").permitAll());
-    
-    http
-      .formLogin(Customizer.withDefaults());
-      
-    return http.build();
+        .requestMatchers("/", "/login", "/join").permitAll()
+        .requestMatchers("/sitecontrol").hasRole("ADMIN") //"/admin" 경로는 공격 타겟이 되기 쉬우므로 비표준 경로 사용
+        .requestMatchers("/mypage").hasAnyRole("ADMIN", "USER")
+      )
+      .formLogin(Customizer.withDefaults())
+      .csrf(csrf -> csrf.disable())
+      .build();
   }
 }
